@@ -1,0 +1,38 @@
+{
+  "name": "js-supportbank-swetham077",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "<p align=\"center\">   <img width=\"200px\" src=\"docs/supportbank-logo.png\" alt=\"Supportbank Logo\" /> </p>",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test:d1e1": "mocha ./tests/exercises/day-1-exercise-1.test.mjs",
+    "test:d1e2": "mocha ./tests/exercises/day-1-exercise-2.test.js",
+    "test:d1e3": "mocha ./tests/exercises/day-1-exercise-3.test.js",
+    "test:d2e1": "mocha ./tests/exercises/day-2-exercise-1.test.js",
+    "test:d2e2": "mocha ./tests/exercises/day-2-exercise-2.test.js",
+    "test:d2e3": "mocha ./tests/exercises/day-2-exercise-3.test.js",
+    "test:d3e1": "mocha ./tests/exercises/day-3-exercise-1.test.js",
+    "test:d3e2": "mocha ./tests/exercises/day-3-exercise-2.test.js",
+    "test:d3e3": "mocha ./tests/exercises/day-3-exercise-3.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corndel-swe/js-supportbank-Swetham077.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/corndel-swe/js-supportbank-Swetham077/issues"
+  },
+  "homepage": "https://github.com/corndel-swe/js-supportbank-Swetham077#readme",
+  "devDependencies": {
+    "mocha": "^11.0.1"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
+  }
+}
