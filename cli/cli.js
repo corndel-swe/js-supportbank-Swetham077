@@ -29,10 +29,13 @@ billController
 // Currency conversion functionality
 const currencyController = new Command('currency');
 
-function convertCurrency(amount, fromCurrency, toCurrency) {
+async function convertCurrency(amount, fromCurrency, toCurrency) {
     try {
-        const converter = new CurrencyConverter();
-        const convertedAmount = converter.convert(amount, fromCurrency, toCurrency);
+        const exchangeRate = new ExchangeRate(process.env.OPENEXCHANGERATES_API_KEY);
+        const rates = await exchangeRate.getLatestExchangeRates();
+        const fromRate = rates[fromCurrency];
+        const toRate = rates[toCurrency];
+        const convertedAmount = (amount / fromRate) * toRate;
         console.log(`${amount} ${fromCurrency} is equivalent to ${convertedAmount.toFixed(2)} ${toCurrency}`);
     } catch (error) {
         console.error(error.message);
@@ -45,7 +48,7 @@ currencyController
     .action((amount, fromCurrency, toCurrency) => {
         convertCurrency(parseFloat(amount), fromCurrency.toUpperCase(), toCurrency.toUpperCase());
     });
-
+    
 // Investment calculator functionality
 const investmentController = new Command('invest');
 
@@ -75,7 +78,7 @@ investmentController
         calculateCompoundInterest(parseFloat(principal), parseFloat(rate), parseInt(time));
     });
 
-    const salaryController = new Command('salary');
+const salaryController = new Command('salary');
 
 function calculateTax(salary) {
     const calculator = new SalaryCalculator();
@@ -94,6 +97,6 @@ salaryController
 program.addCommand(billController);
 program.addCommand(currencyController);
 program.addCommand(investmentController);
-program.addCommand(salaryController)
+program.addCommand(salaryController);
 
 program.parse(process.argv);

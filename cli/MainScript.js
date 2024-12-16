@@ -1,12 +1,12 @@
 import fs from 'fs';
-import Transaction from './Transaction.js';
-import Account from './AccountName.js';
-import { Command } from 'commander';
-import transactionController from './transaction.js';
+import Transaction from '../transaction.js';
+import Account from '../Account.js';
+import { Command } from 'commander'
 
 const transactions = [];
 const accounts = {};
 
+// Read the CSV file
 fs.readFile('data/Transactions2014.csv', 'utf-8', (err, data) => {
   if (err) {
     console.error('Error reading the file:', err);
@@ -44,8 +44,8 @@ fs.readFile('data/Transactions2014.csv', 'utf-8', (err, data) => {
 
 const program = new Command();
 
-transactionController
-  .command('summarise all')
+program
+  .command('summarise-all')
   .description('Summarise all accounts')
   .action(() => {
     for (const accountName in accounts) {
@@ -53,7 +53,7 @@ transactionController
     }
   });
 
-accountNameController
+program
   .command('list <accountName>')
   .description('List transactions for an account')
   .action((accountName) => {
@@ -64,9 +64,6 @@ accountNameController
     } else {
       console.log(`Account ${accountName} not found.`);
     }
-  });
-
-  program.addCommand(transactionController);
-  program.addCommand(accountNameController)
+  })
 
 program.parse(process.argv);

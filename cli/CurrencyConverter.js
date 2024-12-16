@@ -1,18 +1,27 @@
-class CurrencyConverter {
-    constructor() {
-        this.exchangeRates = {
-            USD: { GBP: 0.75, EUR: 0.85 },
-            GBP: { USD: 1.33, EUR: 1.13 },
-            EUR: { USD: 1.18, GBP: 0.88 }
-        };
-    }
+const { Command } = require('commander');
 
-    convert(amount, fromCurrency, toCurrency) {
-        if (!this.exchangeRates[fromCurrency] || !this.exchangeRates[fromCurrency][toCurrency]) {
-            throw new Error(`Conversion rate from ${fromCurrency} to ${toCurrency} not available.`);
-        }
-        return amount * this.exchangeRates[fromCurrency][toCurrency];
+const currencyController = new Command('currency');
+
+async function convertCurrency(amount, fromCurrency, toCurrency) {
+    try {
+        const appId = '3725fc16881d410db22a3b1049cb7552'; // Directly use your API key here
+        const exchangeRates = new ExchangeRates(appId);
+        const rates = await exchangeRates.getLatestExchangeRates();
+        const fromRate = rates[fromCurrency];
+        const toRate = rates[toCurrency];
+        const convertedAmount = (amount / fromRate) * toRate;
+        console.log(`${amount} ${fromCurrency} is equivalent to ${convertedAmount.toFixed(2)} ${toCurrency}`);
+    } catch (error) {
+        console.error(error.message);
     }
 }
 
-export default CurrencyConverter;
+currencyController
+    .command('convert <amount> <fromCurrency> <toCurrency>')
+    .description('Convert currency from one to another')
+    .action((amount, fromCurrency, toCurrency) => {
+        convertCurrency(parseFloat(amount), fromCurrency.toUpperCase(), toCurrency.toUpperCase());
+    });
+
+// Export the currencyController if needed
+module.exports = currencyController;
