@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs'
 import { strict as assert } from 'assert'
 
+
 describe('Project', () => {
   it('should be configured to use ES6 Modules for importing', () => {
     const config = JSON.parse(readFileSync('package.json'))
